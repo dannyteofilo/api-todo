@@ -14,7 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $task = Task::latest()->paginate(5);
+        return $task;
     }
 
     /**
@@ -34,8 +35,13 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {        
+        $task = new Task();
+        $task->user_id = $request->userId;
+        $task->status_id = $request->statusId;
+        $task->title = $request->title;
+        $task->description = $request->description;
+        $task->save();
     }
 
     /**
@@ -46,7 +52,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return $task;
     }
 
     /**
@@ -69,7 +75,8 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $task->update($request->all());
+        return $task;
     }
 
     /**
@@ -80,6 +87,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return response()->json([
+            'message' => 'Success'
+        ], 204);
     }
 }
