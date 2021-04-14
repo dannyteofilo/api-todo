@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\TaskResource;
 class TaskController extends Controller
 {
     /**
@@ -14,8 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::latest()->paginate(5);
-        return $task;
+        return Task::latest()->paginate(5);
+        // return new TaskResource(Task::latest()->paginate(5));
     }
 
     /**
@@ -52,7 +52,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return $task;
+        // return $task;
+        return  new TaskResource($task);
     }
 
     /**

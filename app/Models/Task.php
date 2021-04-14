@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable=['user_id','status_id','title','description'];
+    use HasFactory;
+
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
 }
