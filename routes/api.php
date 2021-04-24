@@ -17,10 +17,20 @@ use \App\Http\Controllers\StatusController as StatusV1;
 */
 
 Route::apiResource('/tasks', TasksV1::class)
-    ->only(['index', 'update', 'store', 'destroy', 'show']);
+    ->only(['index', 'update', 'store', 'destroy', 'show'])
+    ->middleware('auth:sanctum');
 
 Route::apiResource('/status', StatusV1::class)
-    ->only('index');
+    ->only('index')
+    ->middleware('auth:sanctum');
+
+Route::post('auth/login',[\App\Http\Controllers\Api\LoginController::class,
+    'login'
+]);
+
+Route::post('auth/register',[\App\Http\Controllers\Api\LoginController::class,
+    'register'
+]);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
